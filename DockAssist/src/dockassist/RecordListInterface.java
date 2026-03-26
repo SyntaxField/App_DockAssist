@@ -10,4 +10,11 @@ package dockassist;
  */
 public class RecordListInterface {
     
+    public boolean isEmpty(); //method used to check if record list is empty
+    public int size(); //num of records in list
+    public void addRecord(DocklandsRecord record);//adds a DocklandsRecord object to the list
+    public DocklandsRecord getRecord(int index);
+    public void removeRecord(int index);
+    public String printRecords();
+    
 }
