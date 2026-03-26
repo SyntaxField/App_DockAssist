@@ -14,7 +14,7 @@ public interface RecordListInterface {
     public boolean isEmpty(); //method used to check if record list is empty
     public int size(); //num of records in list
     public void addRecord(DocklandsRecord record);//adds a DocklandsRecord object to the list
-    public DocklandsRecord getRecord(int index);
-    public void removeRecord(int index);
-    public String printRecords();
+    public DocklandsRecord getRecord(int index);//returns the record at specified index in the ArrayList i.e RecordList
+    public void removeRecord(int index);//removes a record at specified index in the ArrayList i.e RecordList
+    public String printRecords();//this method is used to return all record values as one string
 }

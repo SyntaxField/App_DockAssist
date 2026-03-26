@@ -14,7 +14,9 @@ public class DockAssistApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        DockAssistGUI gui;//declare object DockAssistGUI
+        gui = new DockAssistGUI();//create instance of DockAssistGUI called gui
+        gui.setVisible(true); // makes GUI visible
     }
     
 }

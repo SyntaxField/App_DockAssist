@@ -8,12 +8,12 @@ package dockassist;
  *
  * @author jamesmurphy
  */
-public class AccessLocation extends DocklandsRecord{
+public class AccessLocation extends DocklandsRecord{//inherits from DocklandsRecord
     //stores true/false value
     private boolean hasRamp;//such as whether the location has a ramp
     private boolean hasLift;
     private boolean stepFree;
-    
+    //constructor
     public AccessLocation(int id, String title, String description,String location, boolean hasRamp, boolean hasLift,boolean stepFree){
         super(id,title,description,location);
         this.hasRamp = hasRamp;

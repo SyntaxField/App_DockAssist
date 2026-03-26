@@ -8,27 +8,30 @@ package dockassist;
  *
  * @author jamesmurphy
  */
-public class AccessIssue extends DocklandsRecord{
+public class AccessIssue extends DocklandsRecord{ //AccessIssue is the child class that inherits from DocklandsRecord
+    //such as
+    private int priority;//storing the priority issue
+    private String status;// the issues status
+    private String issueType;// the issue type
+    private String reportDate;// and the date the issue was reported on
     
-    private int priority;
-    private String status;
-    private String issueType;
-    private String reportDate;
-    
+    //constructor used to create and initialise AccessIssue object
     public AccessIssue(int id,String title, String description, String location, int priority, String status, String issueType, String reportDate){
-        super(id,title,description,location);
-        this.priority = priority;
-        this.status = status;
-        this.issueType = issueType;
-        this.reportDate = reportDate;
+        super(id,title,description,location);//this calls the parent constructor DocklandsRecord
+        this.priority = priority;//saves priority value
+        this.status = status;//saves status value
+        this.issueType = issueType;//saves issue type value
+        this.reportDate = reportDate;//saves report date value
     }
+    //getters
     
     public int getPriority() {
-        return priority;
+        return priority;//returns the priority value
     }
     
     @Override
     public String getSummary() {
+        //adds the child class details to parent summary
         return super.getSummary() + ", Priority: "+ priority +", Status: "+status+", Issue Type: "+issueType+", Report Date: "+reportDate;
     }
 }

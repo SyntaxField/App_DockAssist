@@ -12,11 +12,12 @@ public class DockAssistGUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DockAssistGUI.class.getName());
 
-    /**
-     * Creates new form DockAssistGUI
-     */
+    private RecordList recordList; //used to store the records
+   
     public DockAssistGUI() {
         initComponents();
+        
+        recordList = new RecordList(); //this creates the RecordList object
     }
 
     /**
@@ -30,7 +31,7 @@ public class DockAssistGUI extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        recordFormPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -43,8 +44,26 @@ public class DockAssistGUI extends javax.swing.JFrame {
         addRecordBtn = new javax.swing.JButton();
         listRecordsBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        recordFormPanel = new javax.swing.JTextArea();
+        recordsTa = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
+        issueFormPanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        issueIdTf = new javax.swing.JTextField();
+        issueTitleTf = new javax.swing.JTextField();
+        issueTypeTf = new javax.swing.JTextField();
+        priorityTf = new javax.swing.JTextField();
+        statusTf = new javax.swing.JTextField();
+        reportDateTf = new javax.swing.JTextField();
+        addIssueBtn = new javax.swing.JButton();
+        nextIssueBtn = new javax.swing.JButton();
+        listIssuesBtn = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        issuesTa = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -52,7 +71,7 @@ public class DockAssistGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DockAssistGUI");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Add Accessibility Record"));
+        recordFormPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Add Accessibility Record"));
 
         jLabel1.setText("ID:");
 
@@ -62,70 +81,74 @@ public class DockAssistGUI extends javax.swing.JFrame {
 
         jLabel4.setText("Location:");
 
-        idTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTfActionPerformed(evt);
-            }
-        });
-
         descriptionTa.setColumns(20);
         descriptionTa.setRows(5);
         jScrollPane2.setViewportView(descriptionTa);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout recordFormPanelLayout = new javax.swing.GroupLayout(recordFormPanel);
+        recordFormPanel.setLayout(recordFormPanelLayout);
+        recordFormPanelLayout.setHorizontalGroup(
+            recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recordFormPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(recordFormPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(87, 87, 87)
                         .addComponent(idTf, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(recordFormPanelLayout.createSequentialGroup()
+                        .addGroup(recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(33, 33, 33)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titleTf)
                             .addComponent(jScrollPane2)
                             .addComponent(locationTf))))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        recordFormPanelLayout.setVerticalGroup(
+            recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recordFormPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(idTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(titleTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(recordFormPanelLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(recordFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(locationTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
         addRecordBtn.setText("Add Record");
+        addRecordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRecordBtnActionPerformed(evt);
+            }
+        });
 
         listRecordsBtn.setText("List Records");
+        listRecordsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listRecordsBtnActionPerformed(evt);
+            }
+        });
 
-        recordFormPanel.setColumns(20);
-        recordFormPanel.setRows(5);
-        jScrollPane1.setViewportView(recordFormPanel);
+        recordsTa.setColumns(20);
+        recordsTa.setRows(5);
+        jScrollPane1.setViewportView(recordsTa);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,7 +159,7 @@ public class DockAssistGUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(recordFormPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
@@ -150,7 +173,7 @@ public class DockAssistGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(recordFormPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addRecordBtn)
@@ -162,15 +185,126 @@ public class DockAssistGUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Manage Records", jPanel1);
 
+        issueFormPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Manage Accessibility Issues"));
+
+        jLabel5.setText("ID:");
+
+        jLabel6.setText("Title:");
+
+        jLabel7.setText("Issue Type:");
+
+        jLabel8.setText("Priority:");
+
+        jLabel9.setText("Status:");
+
+        jLabel10.setText("Report Date:");
+
+        statusTf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusTfActionPerformed(evt);
+            }
+        });
+
+        addIssueBtn.setText("Add Issue");
+
+        nextIssueBtn.setText("Next Issue");
+
+        listIssuesBtn.setText("List Issue");
+
+        issuesTa.setColumns(20);
+        issuesTa.setRows(5);
+        jScrollPane3.setViewportView(issuesTa);
+
+        javax.swing.GroupLayout issueFormPanelLayout = new javax.swing.GroupLayout(issueFormPanel);
+        issueFormPanel.setLayout(issueFormPanelLayout);
+        issueFormPanelLayout.setHorizontalGroup(
+            issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, issueFormPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, issueFormPanelLayout.createSequentialGroup()
+                        .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(24, 24, 24)
+                        .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(statusTf, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                            .addComponent(priorityTf, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(issueTypeTf, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(issueTitleTf, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(issueIdTf, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, issueFormPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(reportDateTf)
+                            .addGroup(issueFormPanelLayout.createSequentialGroup()
+                                .addComponent(addIssueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nextIssueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(listIssuesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        issueFormPanelLayout.setVerticalGroup(
+            issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(issueFormPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(issueFormPanelLayout.createSequentialGroup()
+                        .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(issueIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(issueTitleTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7))
+                    .addComponent(issueTypeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(priorityTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(statusTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(reportDateTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addIssueBtn)
+                    .addComponent(nextIssueBtn)
+                    .addComponent(listIssuesBtn))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 636, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(issueFormPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(issueFormPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Manage Issues", jPanel2);
@@ -197,9 +331,37 @@ public class DockAssistGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void idTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTfActionPerformed
+    private void statusTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusTfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_idTfActionPerformed
+    }//GEN-LAST:event_statusTfActionPerformed
+
+    private void addRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecordBtnActionPerformed
+       //declare variables
+       int id;
+       String title;
+       String description;
+       String location;
+       //object variable that stores a new record
+       DocklandsRecord record;
+       
+       //initialise variables
+       id = Integer.parseInt(idTf.getText()); // gets ID valuesrting value from text field then parsed into an integer
+       title = titleTf.getText(); //gets title from text field, then stored in title
+       description = descriptionTa.getText(); //gets text from text field, then stored in description
+       location = locationTf.getText(); // gets the text from text field, then stored in location
+       
+       //create objects
+       record = new DocklandsRecord(id,title,description,location);//new Docklands object
+       recordList.addRecord(record);//this adds the record to the RecordList
+       
+       recordsTa.setText("Record added successfully.\n"); // sets the text in output, text area
+        
+    }//GEN-LAST:event_addRecordBtnActionPerformed
+
+    private void listRecordsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listRecordsBtnActionPerformed
+        recordsTa.setText(recordList.printRecords()); //displays all stored records
+        
+    }//GEN-LAST:event_listRecordsBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,25 +389,43 @@ public class DockAssistGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addIssueBtn;
     private javax.swing.JButton addRecordBtn;
     private javax.swing.JTextArea descriptionTa;
     private javax.swing.JTextField idTf;
+    private javax.swing.JPanel issueFormPanel;
+    private javax.swing.JTextField issueIdTf;
+    private javax.swing.JTextField issueTitleTf;
+    private javax.swing.JTextField issueTypeTf;
+    private javax.swing.JTextArea issuesTa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton listIssuesBtn;
     private javax.swing.JButton listRecordsBtn;
     private javax.swing.JTextField locationTf;
-    private javax.swing.JTextArea recordFormPanel;
+    private javax.swing.JButton nextIssueBtn;
+    private javax.swing.JTextField priorityTf;
+    private javax.swing.JPanel recordFormPanel;
+    private javax.swing.JTextArea recordsTa;
+    private javax.swing.JTextField reportDateTf;
+    private javax.swing.JTextField statusTf;
     private javax.swing.JTextField titleTf;
     // End of variables declaration//GEN-END:variables
 }
