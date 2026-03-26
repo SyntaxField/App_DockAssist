@@ -8,7 +8,8 @@ package dockassist;
  *
  * @author jamesmurphy
  */
-public class RecordListInterface {
+//this interface list all the methods that is needed by RecordList
+public interface RecordListInterface {
     
     public boolean isEmpty(); //method used to check if record list is empty
     public int size(); //num of records in list
@@ -16,5 +17,4 @@ public class RecordListInterface {
     public DocklandsRecord getRecord(int index);
     public void removeRecord(int index);
     public String printRecords();
-    
 }
