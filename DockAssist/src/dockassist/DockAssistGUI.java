@@ -45,6 +45,8 @@ public class DockAssistGUI extends javax.swing.JFrame {
         listRecordsBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         recordsTa = new javax.swing.JTextArea();
+        removeRecordBtn = new javax.swing.JButton();
+        searchRecordBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         issueFormPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -150,6 +152,20 @@ public class DockAssistGUI extends javax.swing.JFrame {
         recordsTa.setRows(5);
         jScrollPane1.setViewportView(recordsTa);
 
+        removeRecordBtn.setText("Delete Record");
+        removeRecordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRecordBtnActionPerformed(evt);
+            }
+        });
+
+        searchRecordBtn.setText("Search Record");
+        searchRecordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchRecordBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -166,6 +182,10 @@ public class DockAssistGUI extends javax.swing.JFrame {
                         .addComponent(addRecordBtn)
                         .addGap(18, 18, 18)
                         .addComponent(listRecordsBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(removeRecordBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchRecordBtn)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -177,7 +197,9 @@ public class DockAssistGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addRecordBtn)
-                    .addComponent(listRecordsBtn))
+                    .addComponent(listRecordsBtn)
+                    .addComponent(removeRecordBtn)
+                    .addComponent(searchRecordBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -363,6 +385,30 @@ public class DockAssistGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_listRecordsBtnActionPerformed
 
+    private void removeRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRecordBtnActionPerformed
+        int index;//stores the index that will be removed
+        
+        index = Integer.parseInt(idTf.getText());//gets srting value then parses into integer
+        recordList.removeRecord(index);//removes reocrd at specified index
+        recordsTa.setText("Record removed");//displays message in output
+    }//GEN-LAST:event_removeRecordBtnActionPerformed
+
+    private void searchRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchRecordBtnActionPerformed
+        int index;//stores the index to search
+        DocklandsRecord record; //stores the returned record
+        
+        index = Integer.parseInt(idTf.getText()); // reads index from the ID text field
+        record = recordList.getRecord(index); //gets record at that index
+        
+        //validation
+        if (record != null){
+            recordsTa.setText(record.getSummary());//displays the record summary
+        }
+        else {
+            recordsTa.setText("No record found at that index");//error message
+        }
+    }//GEN-LAST:event_searchRecordBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -424,7 +470,9 @@ public class DockAssistGUI extends javax.swing.JFrame {
     private javax.swing.JTextField priorityTf;
     private javax.swing.JPanel recordFormPanel;
     private javax.swing.JTextArea recordsTa;
+    private javax.swing.JButton removeRecordBtn;
     private javax.swing.JTextField reportDateTf;
+    private javax.swing.JButton searchRecordBtn;
     private javax.swing.JTextField statusTf;
     private javax.swing.JTextField titleTf;
     // End of variables declaration//GEN-END:variables
