@@ -334,10 +334,10 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="statusTf" pref="510" max="32767" attributes="0"/>
+                                      <Component id="statusTf" max="32767" attributes="0"/>
                                       <Component id="priorityTf" alignment="0" max="32767" attributes="0"/>
                                       <Component id="issueTypeTf" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="issueTitleTf" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="issueTitleTf" alignment="0" pref="510" max="32767" attributes="0"/>
                                       <Component id="issueIdTf" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -346,8 +346,7 @@
                                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="reportDateTf" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
                                           <Component id="addIssueBtn" min="-2" pref="101" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="nextIssueBtn" min="-2" pref="101" max="-2" attributes="0"/>
@@ -355,6 +354,7 @@
                                           <Component id="listIssuesBtn" min="-2" pref="101" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
+                                      <Component id="reportDateTf" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -442,8 +442,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="issueIdTf">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="issueIdTfActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="issueTitleTf">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="issueTitleTfActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="issueTypeTf">
                 </Component>

@@ -9,9 +9,9 @@ package dockassist;
  * @author jamesmurphy
  */
 public class DockAssistGUI extends javax.swing.JFrame {
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DockAssistGUI.class.getName());
-
+    
     private RecordList recordList; //used to store the records
     private MyStack recentStack; //MyStack object that stores recently viewed records
     private MyPriorityQueue issueQueue; //MyPriorityQueue object that stores the urgent issues
@@ -234,6 +234,18 @@ public class DockAssistGUI extends javax.swing.JFrame {
 
         jLabel10.setText("Report Date:");
 
+        issueIdTf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                issueIdTfActionPerformed(evt);
+            }
+        });
+
+        issueTitleTf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                issueTitleTfActionPerformed(evt);
+            }
+        });
+
         statusTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusTfActionPerformed(evt);
@@ -282,24 +294,24 @@ public class DockAssistGUI extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(24, 24, 24)
                         .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(statusTf, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                            .addComponent(statusTf)
                             .addComponent(priorityTf, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(issueTypeTf, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(issueTitleTf, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(issueTitleTf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                             .addComponent(issueIdTf, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, issueFormPanelLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
                         .addGroup(issueFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(reportDateTf)
                             .addGroup(issueFormPanelLayout.createSequentialGroup()
                                 .addComponent(addIssueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(nextIssueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(listIssuesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(reportDateTf))))
                 .addContainerGap())
         );
         issueFormPanelLayout.setVerticalGroup(
@@ -475,29 +487,39 @@ public class DockAssistGUI extends javax.swing.JFrame {
         String issueType;//stores the issue type
         String reportDate;//stores the report date
         AccessIssue issue;//object for AccessIssue
+        
+        if (issueIdTf.getText().equals("") || issueTitleTf.getText().equals("") || issueTypeTf.getText().equals("") || priorityTf.getText().equals("") || statusTf.getText().equals("") || reportDateTf.getText().equals("")) {
+            issuesTa.setText("Please fill in all fields");
+            return;
+        }
+        try {//trys to convert ID and Priority into integers
+            
+            id = Integer.parseInt(issueIdTf.getText());//reads the ID and converts to integer
+            title = issueTitleTf.getText();
+            issueType = issueTypeTf.getText();
+            priority = Integer.parseInt(priorityTf.getText());
+            status = statusTf.getText();
+            reportDate = reportDateTf.getText();
+            
+            description = "";
+            location = "";
+            //creates issue object
+            issue = new AccessIssue(id, title, description, location, priority, status, issueType, reportDate);
+            
+            issueQueue.enqueue(priority, issue);
+            issuesTa.setText("The issue was added successfully.\n");
 
-        id = Integer.parseInt(issueIdTf.getText());//reads the ID and converts to integer
-        title = issueTitleTf.getText();
-        issueType = issueTypeTf.getText();
-        priority = Integer.parseInt(priorityTf.getText());
-        status = statusTf.getText();
-        reportDate = reportDateTf.getText();
-
-        description = "";
-        location = "";
-
-        issue = new AccessIssue(id, title, description, location, priority, status, issueType, reportDate);
-
-        issueQueue.enqueue(priority, issue);
-        issuesTa.setText("The issue was added successfully.\n");
-
-        //reset fields after adding
-        issueIdTf.setText("");
-        issueTitleTf.setText("");
-        issueTypeTf.setText("");
-        priorityTf.setText("");
-        statusTf.setText("");
-        reportDateTf.setText("");
+            //reset fields after adding
+            issueIdTf.setText("");
+            issueTitleTf.setText("");
+            issueTypeTf.setText("");
+            priorityTf.setText("");
+            statusTf.setText("");
+            reportDateTf.setText("");
+            
+        } catch (NumberFormatException e) {//error handling displays message in text area for ID and Priority fields
+            issuesTa.setText("Please enter a valid number for ID and Priority");
+        }
 
     }//GEN-LAST:event_addIssueBtnActionPerformed
 
@@ -521,6 +543,14 @@ public class DockAssistGUI extends javax.swing.JFrame {
     private void viewRecentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRecentBtnActionPerformed
         recordsTa.setText(recentStack.printStack());//print the recently viewed stack
     }//GEN-LAST:event_viewRecentBtnActionPerformed
+
+    private void issueIdTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueIdTfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_issueIdTfActionPerformed
+
+    private void issueTitleTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueTitleTfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_issueTitleTfActionPerformed
 
     /**
      * @param args the command line arguments
