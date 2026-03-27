@@ -36,7 +36,7 @@ public class MyStack implements StackInterface {
     @Override
     public Object pop() { //removes top item from stack and returns it
         //checks that stack is not empty
-        if(stack.size() < 0) {
+        if(stack.size() > 0) {
             return stack.remove(0);//removes and returns item at top of stack
         }
         else {

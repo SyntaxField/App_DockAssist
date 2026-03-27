@@ -45,4 +45,9 @@ public class DocklandsRecord {
         return "ID: "+id+", Title: "+title+", Description: "+description+", Location: "+location;
     }
     
+    @Override
+    public String toString() { //returns a string
+        return getSummary();
+    }
+    
 }

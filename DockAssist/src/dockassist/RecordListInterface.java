@@ -17,5 +17,7 @@ public interface RecordListInterface {
     public DocklandsRecord getRecord(int index);//returns the record at specified index in the ArrayList i.e RecordList
     public void removeRecord(int index);//removes a record at specified index in the ArrayList i.e RecordList
     public String printRecords();//this method is used to return all record values as one string
+    public DocklandsRecord searchById(int id);//returns record with matching ID
+    public void removeById(int id);//removes record with matching ID
     
 }

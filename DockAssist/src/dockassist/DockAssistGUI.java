@@ -9,15 +9,19 @@ package dockassist;
  * @author jamesmurphy
  */
 public class DockAssistGUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DockAssistGUI.class.getName());
 
     private RecordList recordList; //used to store the records
-   
+    private MyStack recentStack; //MyStack object that stores recently viewed records
+    private MyPriorityQueue issueQueue; //MyPriorityQueue object that stores the urgent issues
+
     public DockAssistGUI() {
         initComponents();
-        
-        recordList = new RecordList(); //this creates the RecordList object
+        //initialise
+        recordList = new RecordList(); //creates the RecordList object
+        recentStack = new MyStack(); //creates the MyStack object
+        issueQueue = new MyPriorityQueue();//creates the MyPriorityQueue object
     }
 
     /**
@@ -47,6 +51,7 @@ public class DockAssistGUI extends javax.swing.JFrame {
         recordsTa = new javax.swing.JTextArea();
         removeRecordBtn = new javax.swing.JButton();
         searchRecordBtn = new javax.swing.JButton();
+        viewRecentBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         issueFormPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -166,19 +171,22 @@ public class DockAssistGUI extends javax.swing.JFrame {
             }
         });
 
+        viewRecentBtn.setText("View Recent");
+        viewRecentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewRecentBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(recordFormPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(6, 6, 6)
                         .addComponent(addRecordBtn)
                         .addGap(18, 18, 18)
                         .addComponent(listRecordsBtn)
@@ -186,7 +194,11 @@ public class DockAssistGUI extends javax.swing.JFrame {
                         .addComponent(removeRecordBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchRecordBtn)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(viewRecentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(11, 11, 11))
+                    .addComponent(recordFormPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -199,7 +211,8 @@ public class DockAssistGUI extends javax.swing.JFrame {
                     .addComponent(addRecordBtn)
                     .addComponent(listRecordsBtn)
                     .addComponent(removeRecordBtn)
-                    .addComponent(searchRecordBtn))
+                    .addComponent(searchRecordBtn)
+                    .addComponent(viewRecentBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -228,10 +241,25 @@ public class DockAssistGUI extends javax.swing.JFrame {
         });
 
         addIssueBtn.setText("Add Issue");
+        addIssueBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addIssueBtnActionPerformed(evt);
+            }
+        });
 
         nextIssueBtn.setText("Next Issue");
+        nextIssueBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextIssueBtnActionPerformed(evt);
+            }
+        });
 
         listIssuesBtn.setText("List Issue");
+        listIssuesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listIssuesBtnActionPerformed(evt);
+            }
+        });
 
         issuesTa.setColumns(20);
         issuesTa.setRows(5);
@@ -358,56 +386,141 @@ public class DockAssistGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_statusTfActionPerformed
 
     private void addRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecordBtnActionPerformed
-       //declare variables
-       int id;
-       String title;
-       String description;
-       String location;
-       //object variable that stores a new record
-       DocklandsRecord record;
-       
-       //initialise variables
-       id = Integer.parseInt(idTf.getText()); // gets ID valuesrting value from text field then parsed into an integer
-       title = titleTf.getText(); //gets title from text field, then stored in title
-       description = descriptionTa.getText(); //gets text from text field, then stored in description
-       location = locationTf.getText(); // gets the text from text field, then stored in location
-       
-       //create objects
-       record = new DocklandsRecord(id,title,description,location);//new Docklands object
-       recordList.addRecord(record);//this adds the record to the RecordList
-       
-       recordsTa.setText("Record added successfully.\n"); // sets the text in output, text area
-        
+        //declare variables
+        int id;
+        String title;
+        String description;
+        String location;
+        //object variable that stores a new record
+        DocklandsRecord record;
+
+        //initialise variables
+        id = Integer.parseInt(idTf.getText()); // gets ID valuesrting value from text field then parsed into an integer
+        title = titleTf.getText(); //gets title from text field, then stored in title
+        description = descriptionTa.getText(); //gets text from text field, then stored in description
+        location = locationTf.getText(); // gets the text from text field, then stored in location
+
+        //create objects
+        record = new DocklandsRecord(id, title, description, location);//new Docklands object
+        recordList.addRecord(record);//this adds the record to the RecordList
+
+        recordsTa.setText("Record added successfully.\n"); // sets the text in output, text area
+
+        idTf.setText("");//resets the ID text field
+        titleTf.setText("");//resets title text field
+        descriptionTa.setText("");//resets the description text area
+        locationTf.setText("");//resets the location text field       
+
     }//GEN-LAST:event_addRecordBtnActionPerformed
 
     private void listRecordsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listRecordsBtnActionPerformed
         recordsTa.setText(recordList.printRecords()); //displays all stored records
-        
+
     }//GEN-LAST:event_listRecordsBtnActionPerformed
 
     private void removeRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRecordBtnActionPerformed
-        int index;//stores the index that will be removed
+        int id;//stores the record id that will be removed
+        DocklandsRecord record;//stores the record to be removed
         
-        index = Integer.parseInt(idTf.getText());//gets srting value then parses into integer
-        recordList.removeRecord(index);//removes reocrd at specified index
-        recordsTa.setText("Record removed");//displays message in output
+        if (idTf.getText().equals("")) {
+            recordsTa.setText("Enter a valid ID to delete");
+            return;
+        }
+        try {
+            id = Integer.parseInt(idTf.getText()); // reads the ID from the text field
+            record = recordList.searchById(id); // checks if a record with that ID exists
+
+            if (record != null) {
+                recordList.removeById(id); //removes the record
+                recordsTa.setText("Record removed successfully"); //message for text area
+            } else {
+                recordsTa.setText("No record found with that ID"); //validation message in text area
+            }
+        } catch (NumberFormatException e) {//handles an invalid input for num
+            recordsTa.setText("Please enter a valid number for ID");//validation message for text area
+        }
+
     }//GEN-LAST:event_removeRecordBtnActionPerformed
 
     private void searchRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchRecordBtnActionPerformed
-        int index;//stores the index to search
+        int id;//stores the id to search
         DocklandsRecord record; //stores the returned record
-        
-        index = Integer.parseInt(idTf.getText()); // reads index from the ID text field
-        record = recordList.getRecord(index); //gets record at that index
-        
-        //validation
-        if (record != null){
-            recordsTa.setText(record.getSummary());//displays the record summary
+
+        if (idTf.getText().equals("")) {
+            recordsTa.setText("Please enter an ID to search");//validation for empty fields
         }
-        else {
-            recordsTa.setText("No record found at that index");//error message
+        try {//try catch used to convert text to an integer for validation
+            id = Integer.parseInt(idTf.getText()); // reads id from the ID text field
+            record = recordList.searchById(id); //searches for the record by using ID
+
+            if (record != null) {
+                recordsTa.setText(record.getSummary());//displays the record summary
+                recentStack.push(record);//pushes the viewed record on to the stack
+            } else {
+                recordsTa.setText("No record found at that ID");//error message
+            }
+        } catch (NumberFormatException e) {//handles invalid num input
+            recordsTa.setText("Please enter a valid number for ID");//displayed in text area
         }
     }//GEN-LAST:event_searchRecordBtnActionPerformed
+
+    private void addIssueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addIssueBtnActionPerformed
+        //variables
+        int id;
+        String title;
+        String description;
+        String location;
+        int priority;
+        String status;//stores the issue status
+        String issueType;//stores the issue type
+        String reportDate;//stores the report date
+        AccessIssue issue;//object for AccessIssue
+
+        id = Integer.parseInt(issueIdTf.getText());//reads the ID and converts to integer
+        title = issueTitleTf.getText();
+        issueType = issueTypeTf.getText();
+        priority = Integer.parseInt(priorityTf.getText());
+        status = statusTf.getText();
+        reportDate = reportDateTf.getText();
+
+        description = "";
+        location = "";
+
+        issue = new AccessIssue(id, title, description, location, priority, status, issueType, reportDate);
+
+        issueQueue.enqueue(priority, issue);
+        issuesTa.setText("The issue was added successfully.\n");
+
+        //reset fields after adding
+        issueIdTf.setText("");
+        issueTitleTf.setText("");
+        issueTypeTf.setText("");
+        priorityTf.setText("");
+        statusTf.setText("");
+        reportDateTf.setText("");
+
+    }//GEN-LAST:event_addIssueBtnActionPerformed
+
+    private void listIssuesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listIssuesBtnActionPerformed
+        issuesTa.setText(issueQueue.printPQueue());
+    }//GEN-LAST:event_listIssuesBtnActionPerformed
+
+    private void nextIssueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextIssueBtnActionPerformed
+        Object nextIssue; //stores the next issue
+
+        nextIssue = issueQueue.dequeue(); //renmoves the highest priority issue
+
+        if (nextIssue != null) {//if an issue exists
+            issuesTa.setText(nextIssue.toString());//then display it
+        } else {//else
+            issuesTa.setText("No issues in the queue");//send this message
+        }
+
+    }//GEN-LAST:event_nextIssueBtnActionPerformed
+
+    private void viewRecentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRecentBtnActionPerformed
+        recordsTa.setText(recentStack.printStack());//print the recently viewed stack
+    }//GEN-LAST:event_viewRecentBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -475,5 +588,6 @@ public class DockAssistGUI extends javax.swing.JFrame {
     private javax.swing.JButton searchRecordBtn;
     private javax.swing.JTextField statusTf;
     private javax.swing.JTextField titleTf;
+    private javax.swing.JButton viewRecentBtn;
     // End of variables declaration//GEN-END:variables
 }

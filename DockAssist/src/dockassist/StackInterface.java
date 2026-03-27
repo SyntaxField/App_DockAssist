@@ -8,7 +8,7 @@ package dockassist;
  *
  * @author jamesmurphy
  */
-public interface StackInterface {
+public interface StackInterface {//this interface lists the methods that MyStack must use
     
     public boolean isEmpty(); //checks if stack is empty
     public int size(); //returns num of items in stack

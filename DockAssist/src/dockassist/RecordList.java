@@ -60,4 +60,27 @@ public class RecordList implements RecordListInterface{ //RecordList class imple
         return output;
     }
     
+    @Override
+    public DocklandsRecord searchById(int id) {
+        for(int i =0; i < records.size(); i++) {
+            if(records.get(i).getId() == id){
+                return records.get(i);
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public void removeById(int id) {
+        for(int i = 0; i < records.size(); i++) {
+            if (records.get(i).getId() == id){
+                records.remove(i);
+                break;
+            }
+        }
+    }    
+    
+    
+   
+    
 }
